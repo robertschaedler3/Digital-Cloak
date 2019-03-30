@@ -13,7 +13,7 @@ class Cloak():
     self.deauth_duration = deauth_duration
     # List to store all complete mac addresses that fit the ESSID_type
     self.results = []
-    # Perform a network scan with airodump-ng and find all complete ESSIDs in the results that match the given ESSID_type ddd
+    # Perform a network scan with airodump-ng and find all complete ESSIDs in the results that match the given ESSID_type
     self.scan()
     self.parseScan()
     self.cloak()
