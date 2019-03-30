@@ -20,7 +20,8 @@ class Cloak():
   
   def bash(self, command):
     """Runs a bash command in the terminal"""
-    subprocess.call("{}".format(command), shell=True)
+    # subprocess.call("{}".format(command), shell=True)
+    subprocess.Popen("{}".format(command))
     
 
   def scan(self):
@@ -31,15 +32,17 @@ class Cloak():
     self.bash("airodump-ng -w scan --output-format csv wlan0mon")
     time.sleep(10)
     self.bash("killall airodump-ng")
-      
-        
+         
   def parseScan(self):
+    """Function that opens the output file from the the scan and parses the data"""
     pass
 
   def cloak(self):
+    """Preforms the cloaking function by deauthing all devices that matched the given ESSID type"""
     pass
 
 def main(argv):
+
   essid = ''
   duration = 10
 
