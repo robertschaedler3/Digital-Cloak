@@ -2,6 +2,7 @@ import getopt
 import sys
 import csv
 import subprocess
+from threading import Timer
 import time
 
 
@@ -14,14 +15,25 @@ class Cloak():
     # List to store all complete mac addresses that fit the ESSID_type
     self.results = []
     # Perform a network scan with airodump-ng and find all complete ESSIDs in the results that match the given ESSID_type
+    self.kill = lambda process: process.kill()
     self.scan()
     self.parseScan()
     self.cloak()
   
-  def bash(self, command):
+  def bash(self, command, terminates=True, timeout=30):
     """Runs a bash command in the terminal"""
-    # subprocess.call("{}".format(command), shell=True)
-    subprocess.Popen("{}".format(command))
+    if terminates:
+      subprocess.call("{}".format(command), shell=True)
+    else:
+      process = subprocess.Popen(command.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+      timer = Timer(30, self.kill, process)
+      try:
+        timer.start()
+        stdout, stderr = process.communicate()
+      finally:
+        timer.cancel()
+
+
     
 
   def scan(self):
